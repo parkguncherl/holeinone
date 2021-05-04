@@ -1,0 +1,26 @@
+server:
+  port: 8080
+spring:
+  datasource:
+    driver-class-name: org.mariadb.jdbc.Driver
+    url: 'jdbc:mysql://objformsa.cafe24.com:3306/objformsa'
+    username: objformsa
+    password: park5505**
+  jackson:
+    serialization:
+      fail-on-empty-beans: false
+
+springdoc:
+  api-docs:
+    enabled: true
+    groups:
+      enabled: true
+  swagger-ui:
+    path: /swagger-ui.html
+    display-request-duration: true
+    groups-order: desc
+    
+mybatis:
+  configuration:
+    map-underscore-to-camel-case: true
+    

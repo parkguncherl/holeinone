@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+ "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.tour.app.admin.mapper.AdminMapper">
+  <select id="selectCodeList" resultType="com.tour.app.admin.vo.CodeVo" parameterType="com.tour.app.admin.vo.CodeVo">
+      SELECT 
+        A.CODE_IDX
+      , A.CODE_ID 
+      , A.CODE_NAME
+      , A.CODE_CNTN
+      , A.REG_ID
+      , A.MOD_ID
+      , A.REG_DATE
+      , A.MOD_DATE
+        FROM TCOM_CODE A
+        WHERE 1=1
+       <if test=" codeIdx != null and codeIdx != '' ">
+       AND A.CODE_IDX = #{codeIdx}
+       </if>
+       <if test=" codeId != null and codeId != '' ">
+       AND A.CODE_ID = #{codeId}
+       </if>
+       <if test=" codeName != null and codeName != '' ">
+       AND A.CODE_NAME LIKE CONCAT('%',#{codeName},'%')
+       </if>
+      ORDER BY A.CODE_IDX
+  </select>
+
+  <update id="updateBoard" parameterType="com.tour.app.admin.vo.CodeVo">
+    UPDATE TCOM_CODE
+       SET TITLE = #{title}
+         , CONTENT = #{content}
+     WHERE DOC_NO = #{docNo}
+  </update>
+
+  <delete id="deleteBoard" parameterType="com.tour.app.admin.vo.CodeVo">
+    DELETE FROM TB_BOARD
+     WHERE DOC_NO = #{docNo}
+  </delete>
+
+
+</mapper>

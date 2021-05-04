@@ -6,6 +6,7 @@ import org.apache.ibatis.session.SqlSessionFactory;
 import org.mybatis.spring.SqlSessionFactoryBean;
 import org.mybatis.spring.SqlSessionTemplate;
 import org.mybatis.spring.annotation.MapperScan;
+import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.core.io.Resource;
@@ -16,7 +17,7 @@ import org.springframework.transaction.annotation.EnableTransactionManagement;
  * DatabaseConfig
  */
 @Configuration
-@MapperScan(basePackages = "com.tour.app.board.mapper")
+@MapperScan(basePackages = "com.tour.app.*.mapper")
 @EnableTransactionManagement
 public class DatabaseConfig {
 
@@ -27,7 +28,7 @@ public class DatabaseConfig {
 
     Resource[] res = new PathMatchingResourcePatternResolver().getResources("classpath:mappers/*/*Mapper.xml");
     sessionFactoryBean.setMapperLocations(res);
-
+    sessionFactoryBean.setConfiguration(mybatisConfig());
     return sessionFactoryBean.getObject();
   }
 
@@ -36,5 +37,12 @@ public class DatabaseConfig {
     final SqlSessionTemplate sqlSessionTemplate = new SqlSessionTemplate(sqlSessionFactory);
     return sqlSessionTemplate;
   }
+  
+  @Bean
+  @ConfigurationProperties(prefix = "mybatis.configuration")
+  public org.apache.ibatis.session.Configuration mybatisConfig() {
+		return new org.apache.ibatis.session.Configuration();
+  }
+
 
 }
