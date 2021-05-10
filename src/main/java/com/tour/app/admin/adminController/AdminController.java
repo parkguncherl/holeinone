@@ -42,10 +42,9 @@ public class AdminController {
    * @throws Exception
    */
   @GetMapping(value="/codeList")
-  @ResponseBody
   public ResponseEntity selectCodeList(HttpServletRequest request, CodeVo vo) throws Exception {
 
-	
+	  vo = new CodeVo();
     List<CodeVo> codes = adminService.selectCodeList(vo);
     ResCodeList vos = new ResCodeList();
     vos.setCodes(codes);
